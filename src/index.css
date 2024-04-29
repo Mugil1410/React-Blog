@@ -228,7 +228,21 @@ body {
   cursor: pointer;
 }
 
-
+.social-icons{
+ margin-top: 10px;
+  margin-right: 12px;
+  
+}
+.FaLinkedin{
+  color: #0077b5;
+}
+.FaGithub{
+  color: #000000;
+}
+.FaGlobe{
+ 
+  
+}
 
 .statusMsg {
   margin-top: 2rem;

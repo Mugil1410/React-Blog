@@ -9,10 +9,8 @@ import Footer from "./Footer";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { format } from "date-fns";
-import api from "./api/posts";
 import Editpost from "./Editpost";
 import useWindowSize from "./Hooks/useWindowSize";
-import useAxiosFetch from "./Hooks/useAxiosFetch";
 
 function App() {
   //get all posts
@@ -31,17 +29,7 @@ function App() {
   const Navigate = useNavigate();
   //custom hook
   const { width } = useWindowSize();
-  // useAxiosfetch custom hook to retrive data from server
-  const { data, isLoading, fetchError } = useAxiosFetch(
-    "http://localhost:3500/posts"
-  );
 
-  //use effect to get data  from custom hook and load in your app useState
-  useEffect(() => {
-    if (data) {
-      setPosts(data);
-    }
-  }, [data]);
 
   /* useEffect(() => {
     const fetchposts = async () => {
@@ -80,11 +68,10 @@ function App() {
       body: postBody,
     };
     try {
-      const response = await api.post("/posts", newPost);
-      setPosts([...posts, response.data]);
+      setPosts([...posts, newPost]);
     } catch (error) {
       if (error.response.data) {
-        console.log(error.response.data);
+        console.log(error);
       } else {
         console.log(`error ${error.message}`);
       }
@@ -104,16 +91,16 @@ function App() {
       body: editBody,
     };
     try {
-      const response = await api.put(`/posts/${id}`, updatePost);
+    
       setPosts(
-        posts.map((post) => (post.id === id ? { ...response.data } : post))
+        posts.map((post) => (post.id === id ? { ...updatePost } : post))
       );
       setEditTitle("");
       setEditBody("");
       Navigate("/");
     } catch (error) {
-      if (error.response.data) {
-        console.log(error.response.data);
+      if (error) {
+        console.log(error);
       } else {
         console.log(`error ${error.message}`);
       }
@@ -126,13 +113,13 @@ function App() {
   //delete post
   const handleDelete = async (id) => {
     try {
-      await api.delete(`/posts/${id}`).then(() => {
+      
         setPosts(posts.filter((post) => post.id !== id));
         Navigate("/");
-      });
+    
     } catch (error) {
-      if (error.response.data) {
-        console.log(error.response.data);
+      if (error) {
+        console.log(error);
       } else {
         console.log(`error ${error.message}`);
       }
@@ -141,7 +128,7 @@ function App() {
 
   return (
     <div className="App">
-      <Header title="Movie media" width={width} />
+      <Header title="Blogify" width={width} />
       <Nav search={search} setSearch={setSearch} />
       <Routes>
         <Route
@@ -149,8 +136,6 @@ function App() {
           element={
             <Home
               posts={searchresult}
-              fetchError={fetchError}
-              isLoading={isLoading}
             />
           }
         />
