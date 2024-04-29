@@ -10,6 +10,6 @@ I've developed **Blogify**, a dynamic blog app using React. Users can create, ed
 - User-friendly interface
 
 ## Live Demo
-Explore the live demo: [Blogify App](https://github.com/facebook/create-react-app).
+Explore the live demo: [Blogify App](https://blogify-react-mugil.netlify.app).
 
 Feel free to contribute to the project and share your own stories! 📝🚀
